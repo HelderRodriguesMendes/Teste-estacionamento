@@ -32,37 +32,43 @@ public class MovimentacaoService {
 	Convert_DTO_Entity convert_DTO = new Convert_DTO_Entity();
 	
 	private int Add1Hora = 0;
-
+	
+	//CADASTRA UM NOVO VEICULO NO ESTACONAMENTO
 	public Movimentacao cadastrar(Movimentacao veiculo) {
 		Movimentacao veiculoSalvo = veiculoRepository.save(veiculo);
 
 		return veiculoSalvo;
 	}
-
+	
+	//BUSCA TODOS OS VEICULOS QUE AINDA ESTAO ESTACIONADOS
 	public List<VeiculoEstacionado_DTO> findAllVeivuloEstacionado() {
 		List<Movimentacao> veiculos = veiculoRepository.findAllVeivuloEstacionado()
 				.orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
 		return convert_DTO.toVeiculoEstacionado_DTO(veiculos);
 	}
 
+	//BUSCA TODOS OS VEICULOS QUE JÁ SAIRAM DO ESTACIONAMENTO
 	public List<Movimentacao> findAllEstacionamentosFinalizados() {
 		List<Movimentacao> veiculos = veiculoRepository.findAllEstacionamentosFinalizados()
 				.orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
 		return veiculos;
 	}
 
+	//ALTERA UM VEICULO QUE ESTA ESTACIONADO
 	public List<VeiculoEstacionado_DTO> alterarVeiculoEstacionado(VeiculoEdicao_DTO edita_veiculo) {
 		veiculoRepository.alterarVeiculoEstacionado(edita_veiculo.getModelo(), edita_veiculo.getPlaca(),
 				edita_veiculo.getId());
 		return findAllVeivuloEstacionado();
 	}
 
+	//FINALIZA O ESTACIONAMENTO DE UM VEICULO
 	public List<Movimentacao> finalizarEstacionamento(VeiculoSaida_DTO veiculo) {
 		veiculoRepository.save(calcularValor_Tempo(veiculo));
 
 		return findAllEstacionamentosFinalizados();
 	}
 
+	//CALCULA O VALOR DO TEMPO UTILIZADO NO ESTACIONAMENTO
 	public Movimentacao calcularValor_Tempo(VeiculoSaida_DTO veiculo) {
 		Valor valores = valorRepository.getValores()
 				.orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
@@ -111,7 +117,6 @@ public class MovimentacaoService {
 		Duration duracao;
 
 		totalDias += calcularDias(data_entro, data_saiu);
-		System.out.println("TOTAL DIAS: " + totalDias);
 
 		if (totalDias == 0) { // ENTRO E SAIU NO MESMO DIA
 			
@@ -182,7 +187,7 @@ public class MovimentacaoService {
 		int d = 0;
 
 		Dias = ChronoUnit.DAYS.between(data_entro, data_saiu);
-		d = (int) Dias; // QUANTIDADE DE DIAS ENTRA DATA DE ENTRADA E DE SAIDA
+		d = (int) Dias; // QUANTIDADE DE DIAS ENTRE DATA DE ENTRADA E DE SAIDA
 
 		return d;
 	}
