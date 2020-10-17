@@ -4,7 +4,6 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -75,11 +74,15 @@ public class MovimentacaoService {
 
 		totalHoras = calcularHoras(dadosSalvos.getDataEntrada(), veiculo.getDataSaida(), dadosSalvos.getTempo(),
 				veiculo.getTempo());
-
+		
+		//ADICIONANDO O VALOR DA PRIMEIRA HORA
 		double VALORTOTAL = valores.getValor_primeira_hora();
+		
 		dadosSalvos.setTotalHoras(totalHoras);
+		
+		//DIMINUINDO A PRIMEIRA HORA, QUE É COBRADA NO VALOR DE 6 R$
 		totalHoras -= 1;
-		System.out.println("total horas -1: " + totalHoras);
+		
 
 		VALORTOTAL += totalHoras * valores.getValor_demais_horas();
 
@@ -128,7 +131,6 @@ public class MovimentacaoService {
 			h = (int) horas; // HORAS DO DIA QUE SAIU
 			totalHoras += negativoToPositivo(h) + Add1Hora;
 			
-
 		} else {
 			
 			/*
@@ -145,10 +147,6 @@ public class MovimentacaoService {
 			horas = ChronoUnit.HOURS.between(meiaNoite_saida, hora_saiu);
 			h = (int) horas;
 			totalHoras += negativoToPositivo(h) + Add1Hora; // TOTAL DE HORAS DO DIA QUE SAIU
-
-			if (acrescimoHoraSaida(hora_saiu)) {
-				totalHoras += 1;
-			}
 
 			totalHoras += totalDias * 24; // HORAS DOS RESTANTES DE DIAS QUE FICO
 		}
@@ -178,24 +176,6 @@ public class MovimentacaoService {
 		return HORA;
 	}
 
-	public boolean acrescimoHoraSaida(LocalTime horaSaida) {
-
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-		String horaS = horaSaida.format(formatter);
-		String[] hS = horaS.split(":");
-
-		String hrS = hS[1];
-
-		int hora_S = Integer.parseInt(hrS);
-
-		boolean ok = false;
-
-		if (hora_S > 0) {
-			ok = true;
-		}
-		return ok;
-	}
-
 	// CALCULAR INTERVALO DE DATAS
 	public int calcularDias(LocalDate data_entro, LocalDate data_saiu) {
 		long Dias;
@@ -214,6 +194,11 @@ public class MovimentacaoService {
 		return Integer.parseInt(regex);
 	}
 
+	
+	
+	/*
+	 * LEVAR PARA O ANDROID
+	 * 
 	// PEGAR HORA ATUAL
 	public LocalTime getHoraAtual() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT);
@@ -236,5 +221,5 @@ public class MovimentacaoService {
 		LocalDate localDate = LocalDate.parse(DataAtualForrmat, formatte);
 
 		return localDate;
-	}
+	}*/
 }
