@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.testePratico.model.Movimentacao;
 import br.com.testePratico.model.DTO.VeiculoEdicao_DTO;
 import br.com.testePratico.model.DTO.VeiculoEstacionado_DTO;
+import br.com.testePratico.model.DTO.VeiculoSaida_DTO;
 import br.com.testePratico.service.MovimentacaoService;
 
 @RestController
@@ -36,9 +37,21 @@ public class MovimentacaoController {
 		return new ResponseEntity<List<VeiculoEstacionado_DTO>>(veiculos, HttpStatus.OK);
 	}
 	
+	@GetMapping("/estacionamentosFinalizados")
+	public ResponseEntity<List<Movimentacao>> findAllEstacionamentosFinalizados(){
+		List<Movimentacao> veiculos = veiculoService.findAllEstacionamentosFinalizados();
+		return new ResponseEntity<List<Movimentacao>>(veiculos, HttpStatus.OK);
+	}
+	
 	@PutMapping("/alterarVeiculoEstacionado/{id}")
 	public ResponseEntity<List<VeiculoEstacionado_DTO>>alterarVeiculoEstacionado(@RequestBody VeiculoEdicao_DTO edita_veiculo, @PathVariable("id") Long id){
 		edita_veiculo.setId(id);
 		return new ResponseEntity<List<VeiculoEstacionado_DTO>>(veiculoService.alterarVeiculoEstacionado(edita_veiculo), HttpStatus.OK);
+	}
+	
+	@PutMapping("/finalizarEstacionamento/{id}")
+	public ResponseEntity<List<Movimentacao>>finalizarEstacionamento(@RequestBody VeiculoSaida_DTO veiculo, @PathVariable("id") Long id){
+		veiculo.setId(id);
+		return new ResponseEntity<List<Movimentacao>>(veiculoService.finalizarEstacionamento(veiculo), HttpStatus.OK);
 	}
 }

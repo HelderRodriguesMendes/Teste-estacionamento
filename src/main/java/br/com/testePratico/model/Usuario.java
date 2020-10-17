@@ -11,9 +11,11 @@ import javax.persistence.Table;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 @Table(name = "usuario")
 @EqualsAndHashCode(of = { "id" })
 public class Usuario  implements Serializable {
@@ -31,12 +33,12 @@ public class Usuario  implements Serializable {
 	@Column(name = "usuario", nullable = false, columnDefinition = "varchar(10)")
 	private String usuario ;
 	
-	@Column(name = "senha", nullable = false)
-	private Integer senha;
+	@Column(name = "senha", nullable = false, columnDefinition = "varchar(10)")
+	private String senha;
 	
 	public Usuario() {}
 
-	public Usuario(String nome, String usuario, Integer senha) {
+	public Usuario(String nome, String usuario, String senha) {
 		super();
 		this.nome = nome;
 		this.usuario = usuario;

@@ -4,9 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jdk.jfr.Timestamp;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,15 +16,12 @@ public class VeiculoSaida_DTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
-	private String placa;
-	private String modelo;
 	
-	@DateTimeFormat
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate dataSaida;
 	
-	@Timestamp
+	@JsonFormat(pattern = "HH:mm")
 	private LocalTime tempo;
-	private Double valor;
 	
 	public VeiculoSaida_DTO() {}
 }

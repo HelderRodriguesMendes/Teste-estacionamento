@@ -27,7 +27,7 @@ public class Movimentacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false, unique = true)
 	private Long id;
 	
@@ -51,6 +51,8 @@ public class Movimentacao implements Serializable {
 	
 	@Column(name = "valor")
 	private Double valor;
+	
+	public Integer totalHoras;
 	
 	public Movimentacao() {}
 }

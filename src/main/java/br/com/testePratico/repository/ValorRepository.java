@@ -12,6 +12,6 @@ import br.com.testePratico.model.Valor;
 public interface ValorRepository extends JpaRepository<Valor, Long>{
 	
 	@Transactional
-	@Query(value = "select * from valores", nativeQuery = true)
+	@Query(value = "select * from valor", nativeQuery = true)
 	Optional<Valor> getValores();
 }
