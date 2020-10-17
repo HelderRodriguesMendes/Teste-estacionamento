@@ -96,8 +96,11 @@ public class MovimentacaoService {
 		hora_entro = horaExata(hora_entro, false);
 		hora_saiu = horaExata(hora_saiu, true);
 
-		
+		/*23 PORQUE SE COLOCAR 24 DA ERRO
+		 *SE COLOCAR 0, NÃO CALCULA CORRETAMENTE AS HORAS DO DIA QUE ENTRO NO ESTACIONAMENTO
+		 *ENTÃO SEMPRE QUE CALCULAR O TOTAL DE HORAS UTILIZANDO ESTE (meiaNoite_entrada), DEVE SER ACRESCENTADO 1 HORA*/
 		LocalTime meiaNoite_entrada = LocalTime.of(23, 0, 0);
+		
 		LocalTime meiaNoite_saida = LocalTime.of(0, 0, 0);
 
 		int totalDias = 0, totalHoras = 0, h = 0;
@@ -124,33 +127,16 @@ public class MovimentacaoService {
 			horas = ChronoUnit.HOURS.between(meiaNoite_saida, hora_saiu);
 			h = (int) horas; // HORAS DO DIA QUE SAIU
 			totalHoras += negativoToPositivo(h) + Add1Hora;
-			if (acrescimoHoraSaida(hora_saiu)) {
-				totalHoras += 1;
-			}
-
-		} else if (totalDias == 2) {
 			
-			duracao = Duration.between(hora_entro, meiaNoite_entrada);
-			horas = duracao.toHours();
 
-			h = (int) horas;
-			totalHoras += negativoToPositivo(h) + 1;
-			totalHoras += 24;
-
-			duracao = Duration.between(meiaNoite_saida, hora_saiu);
-			horas = duracao.toHours();
-			h = (int) horas;
-			totalHoras += negativoToPositivo(h) + Add1Hora;
-
-			if (acrescimoHoraSaida(hora_saiu)) {
-				totalHoras += 1;
-				System.out.println("total hora no acrescimo: " + totalHoras);
-			}
-			System.out.println("totalHORAS: " + totalHoras);
 		} else {
 			
-			totalDias -= 1;
-
+			/*
+			 *DIMINUINDO O DIA DA SAIDA
+			 *PORQUE ESSE DIA É CALCULADO SEPARADAMENTE
+			 *POR NÃO UTILIZAR AS 24 HRS*/
+			totalDias -= 1; 
+			
 			duracao = Duration.between(hora_entro, meiaNoite_entrada);
 			horas = duracao.toHours();
 			h = (int) horas;
@@ -158,7 +144,7 @@ public class MovimentacaoService {
 
 			horas = ChronoUnit.HOURS.between(meiaNoite_saida, hora_saiu);
 			h = (int) horas;
-			totalHoras += negativoToPositivo(h) + Add1Hora; // TOTA DE HORAS DO DIA QUE SAIU
+			totalHoras += negativoToPositivo(h) + Add1Hora; // TOTAL DE HORAS DO DIA QUE SAIU
 
 			if (acrescimoHoraSaida(hora_saiu)) {
 				totalHoras += 1;
@@ -181,16 +167,13 @@ public class MovimentacaoService {
 		//E O HORARIO ULTRAPASSA MINUTOS, SERA ADICIONADO A MAIS DEPOIS O VALOR DE 1 HR
 		if(saida) {
 			String minu = h[1];
-			System.out.println("hora cortada: " + minu);
 			if(!minu.equals("00")) {
-				System.out.println("ADICIONO UMA HR");
 				Add1Hora =1;
 			}
 		}
 		
 		String horaExata = h[0] + ":00";
 		LocalTime HORA = LocalTime.parse(horaExata);
-		System.out.println("hora exata: " + HORA);
 		
 		return HORA;
 	}
