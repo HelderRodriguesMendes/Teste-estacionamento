@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,18 +51,26 @@ public class MovimentacaoService {
 	public List<VeiculoEstacionado_DTO> findAllVeivuloEstacionado_Placa(String placa) {
 		List<Movimentacao> veiculos = veiculoRepository.findAllVeivuloEstacionado_Placa(placa)
 				.orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
-		
-		List<VeiculoEstacionado_DTO> v = convert_DTO.toVeiculoEstacionado_DTO(veiculos);
-			
-		if(veiculos.isEmpty()) {
-			v = new ArrayList<>();
-		}
-		return v;
+		return convert_DTO.toVeiculoEstacionado_DTO(veiculos);
+	}
+	
+	// BUSCA TODOS OS VEICULOS QUE JA SAIRAM DO ESTACIONAMENTO - POR PLACA
+	public List<VeiculoEstacionado_DTO> findAllVeivulo_N_Estacionado_Placa(String placa) {
+		List<Movimentacao> veiculos = veiculoRepository.findAllVeivulo_N_Estacionado_Placa(placa)
+				.orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
+		return convert_DTO.toVeiculoEstacionado_DTO(veiculos);
 	}
 
 	// BUSCA TODOS OS VEICULOS QUE AINDA ESTAO ESTACIONADOS - POR MODELO
 	public List<VeiculoEstacionado_DTO> findAllVeivuloEstacionado_Modelo(String modelo) {
 		List<Movimentacao> veiculos = veiculoRepository.findAllVeivuloEstacionado_Modelo(modelo)
+				.orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
+		return convert_DTO.toVeiculoEstacionado_DTO(veiculos);
+	}
+	
+	// BUSCA TODOS OS VEICULOS QUE JA SAIRAM DO ESTACIONAMENTO - POR MODELO
+	public List<VeiculoEstacionado_DTO> findAllVeivulo_N_Estacionado_Modelo(String modelo) {
+		List<Movimentacao> veiculos = veiculoRepository.findAllVeivulo_N_Estacionado_Modelo(modelo)
 				.orElseThrow(() -> new RegistroNaoEncontradoException("Registro não encontrado"));
 		return convert_DTO.toVeiculoEstacionado_DTO(veiculos);
 	}

@@ -40,6 +40,13 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long
 	Optional<List<Movimentacao>> findAllVeivuloEstacionado_Placa(String placa);
 	
 	@Transactional
+	@Query(value = "select * from movimentacao where data_saida is not null and placa like %?1% limit 100", nativeQuery = true)
+	Optional<List<Movimentacao>> findAllVeivulo_N_Estacionado_Placa(String placa);
+	
+	@Transactional
 	@Query(value = "select * from movimentacao where data_saida is null and modelo like %?1% limit 100", nativeQuery = true)
 	Optional<List<Movimentacao>> findAllVeivuloEstacionado_Modelo(String modelo);
+
+	@Query(value = "select * from movimentacao where data_saida is not null and modelo like %?1% limit 100", nativeQuery = true)
+	Optional<List<Movimentacao>> findAllVeivulo_N_Estacionado_Modelo(String modelo);
 }

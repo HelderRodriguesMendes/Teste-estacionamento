@@ -40,14 +40,25 @@ public class MovimentacaoController {
 	
 	@GetMapping("/VeivulosEstacionadosPlaca")
 	public ResponseEntity<List<VeiculoEstacionado_DTO>> findAllVeivuloEstacionado_Placa(@RequestParam String placa){
-		System.out.println("veio placa: " + placa);
 		List<VeiculoEstacionado_DTO> veiculos = veiculoService.findAllVeivuloEstacionado_Placa(placa);
+		return new ResponseEntity<List<VeiculoEstacionado_DTO>>(veiculos, HttpStatus.OK);
+	}
+	
+	@GetMapping("/Veivulos_N_EstacionadosPlaca")
+	public ResponseEntity<List<VeiculoEstacionado_DTO>> findAllVeivulo_N_Estacionado_Placa(@RequestParam String placa){
+		List<VeiculoEstacionado_DTO> veiculos = veiculoService.findAllVeivulo_N_Estacionado_Placa(placa);
 		return new ResponseEntity<List<VeiculoEstacionado_DTO>>(veiculos, HttpStatus.OK);
 	}
 	
 	@GetMapping("/VeivulosEstacionadosModelo")
 	public ResponseEntity<List<VeiculoEstacionado_DTO>> findAllVeivuloEstacionado_Modelo(@RequestParam String modelo){
 		List<VeiculoEstacionado_DTO> veiculos = veiculoService.findAllVeivuloEstacionado_Modelo(modelo);
+		return new ResponseEntity<List<VeiculoEstacionado_DTO>>(veiculos, HttpStatus.OK);
+	}
+	
+	@GetMapping("/Veivulos_N_EstacionadosModelo")
+	public ResponseEntity<List<VeiculoEstacionado_DTO>> findAllVeivulo_N_Estacionado_Modelo(@RequestParam String modelo){
+		List<VeiculoEstacionado_DTO> veiculos = veiculoService.findAllVeivulo_N_Estacionado_Modelo(modelo);
 		return new ResponseEntity<List<VeiculoEstacionado_DTO>>(veiculos, HttpStatus.OK);
 	}
 	
@@ -60,6 +71,8 @@ public class MovimentacaoController {
 	
 	@PutMapping("/alterarVeiculoEstacionado/{id}")
 	public ResponseEntity<List<VeiculoEstacionado_DTO>>alterarVeiculoEstacionado(@RequestBody VeiculoEdicao_DTO edita_veiculo, @PathVariable("id") Long id){
+		System.out.println("alterar id: " + id);
+		System.out.println("alterar modelo: " + edita_veiculo.getModelo());
 		edita_veiculo.setId(id);
 		return new ResponseEntity<List<VeiculoEstacionado_DTO>>(veiculoService.alterarVeiculoEstacionado(edita_veiculo), HttpStatus.OK);
 	}
