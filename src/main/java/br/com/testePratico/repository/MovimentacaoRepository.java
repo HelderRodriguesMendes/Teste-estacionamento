@@ -34,4 +34,12 @@ public interface MovimentacaoRepository extends JpaRepository<Movimentacao, Long
 	@Modifying
 	@Query(value = "update movimentacao set data_saida = ?1, tempo = ?2, valor = ?3 where id = ?4", nativeQuery = true)
 	void finalizarEstacionamento(LocalDate dataSaida, LocalTime tempo, Double valor, Long id);
+	
+	@Transactional
+	@Query(value = "select * from movimentacao where data_saida is null and placa like %?1% limit 100", nativeQuery = true)
+	Optional<List<Movimentacao>> findAllVeivuloEstacionado_Placa(String placa);
+	
+	@Transactional
+	@Query(value = "select * from movimentacao where data_saida is null and modelo like %?1% limit 100", nativeQuery = true)
+	Optional<List<Movimentacao>> findAllVeivuloEstacionado_Modelo(String modelo);
 }

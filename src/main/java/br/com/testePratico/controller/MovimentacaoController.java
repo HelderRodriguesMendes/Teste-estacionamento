@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.testePratico.model.Movimentacao;
@@ -37,8 +38,22 @@ public class MovimentacaoController {
 		return new ResponseEntity<List<VeiculoEstacionado_DTO>>(veiculos, HttpStatus.OK);
 	}
 	
+	@GetMapping("/VeivulosEstacionadosPlaca")
+	public ResponseEntity<List<VeiculoEstacionado_DTO>> findAllVeivuloEstacionado_Placa(@RequestParam String placa){
+		System.out.println("veio placa: " + placa);
+		List<VeiculoEstacionado_DTO> veiculos = veiculoService.findAllVeivuloEstacionado_Placa(placa);
+		return new ResponseEntity<List<VeiculoEstacionado_DTO>>(veiculos, HttpStatus.OK);
+	}
+	
+	@GetMapping("/VeivulosEstacionadosModelo")
+	public ResponseEntity<List<VeiculoEstacionado_DTO>> findAllVeivuloEstacionado_Modelo(@RequestParam String modelo){
+		List<VeiculoEstacionado_DTO> veiculos = veiculoService.findAllVeivuloEstacionado_Modelo(modelo);
+		return new ResponseEntity<List<VeiculoEstacionado_DTO>>(veiculos, HttpStatus.OK);
+	}
+	
 	@GetMapping("/estacionamentosFinalizados")
 	public ResponseEntity<List<Movimentacao>> findAllEstacionamentosFinalizados(){
+		System.out.println("finalizados");
 		List<Movimentacao> veiculos = veiculoService.findAllEstacionamentosFinalizados();
 		return new ResponseEntity<List<Movimentacao>>(veiculos, HttpStatus.OK);
 	}

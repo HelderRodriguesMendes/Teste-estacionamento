@@ -19,10 +19,9 @@ public class UsuarioController {
 	
 	@GetMapping("/logar")
 	public ResponseEntity<Usuario> login(@RequestParam String usuario, @RequestParam String senha){
+
 		usuarioService.inserirDados();
-		
-		System.out.println("VEIO");
-		
+
 		Usuario usu = new Usuario();
 		
 		if(!usuarioService.logar(usuario, senha)) {

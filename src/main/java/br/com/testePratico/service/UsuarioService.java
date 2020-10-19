@@ -22,11 +22,18 @@ public class UsuarioService {
 	
 	
 	public boolean logar(String login, String senha) {
+		
+		String[] l = login.split(",");
+		String lo = l[1];
+		
+		String[] s = senha.split(",");
+		String se = s[1];
+		
 		Usuario usuario = usuarioRepository.findById((long)1).orElseThrow(() -> new RegistroNaoEncontradoException("Usuário não encontrado"));
 		
 		boolean ok = false;
 		
-		if(usuario.getUsuario().equals(login) && usuario.getSenha().equals(senha)) {
+		if(usuario.getUsuario().equals(lo) && usuario.getSenha().equals(se)) {	
 			ok = true;
 		}
 		

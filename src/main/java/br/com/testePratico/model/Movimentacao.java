@@ -11,8 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -37,15 +35,14 @@ public class Movimentacao implements Serializable {
 	@Column(name = "modelo", nullable = false, columnDefinition = "varchar(30)")
 	private String modelo;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd")
+
 	@Column(name = "dataEntrada", nullable = false)
 	private LocalDate dataEntrada;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd")
+
 	@Column(name = "dataSaida")
 	private LocalDate dataSaida;
 	
-	@JsonFormat(pattern = "HH:mm")
 	@Column(name = "tempo")
 	private LocalTime tempo;
 	
