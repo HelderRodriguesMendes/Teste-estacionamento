@@ -90,10 +90,8 @@ public class MovimentacaoService {
 	}
 
 	// FINALIZA O ESTACIONAMENTO DE UM VEICULO
-	public List<Movimentacao> finalizarEstacionamento(VeiculoSaida_DTO veiculo) {
-		veiculoRepository.save(calcularValor_Tempo(veiculo));
-
-		return findAllEstacionamentosFinalizados();
+	public Movimentacao finalizarEstacionamento(VeiculoSaida_DTO veiculo) {
+		return veiculoRepository.save(calcularValor_Tempo(veiculo));
 	}
 
 	// CALCULA O VALOR DO TEMPO UTILIZADO NO ESTACIONAMENTO

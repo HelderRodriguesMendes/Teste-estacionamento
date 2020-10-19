@@ -78,8 +78,8 @@ public class MovimentacaoController {
 	}
 	
 	@PutMapping("/finalizarEstacionamento/{id}")
-	public ResponseEntity<List<Movimentacao>>finalizarEstacionamento(@RequestBody VeiculoSaida_DTO veiculo, @PathVariable("id") Long id){
+	public ResponseEntity<Movimentacao>finalizarEstacionamento(@RequestBody VeiculoSaida_DTO veiculo, @PathVariable("id") Long id){
 		veiculo.setId(id);
-		return new ResponseEntity<List<Movimentacao>>(veiculoService.finalizarEstacionamento(veiculo), HttpStatus.OK);
+		return new ResponseEntity<Movimentacao>(veiculoService.finalizarEstacionamento(veiculo), HttpStatus.OK);
 	}
 }
